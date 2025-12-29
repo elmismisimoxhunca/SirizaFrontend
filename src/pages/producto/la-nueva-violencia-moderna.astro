@@ -1,5 +1,12 @@
 ---
-import { redirect } from 'astro';
-
-redirect('/producto', 301);
+import Layout from '../../layouts/Layout.astro';
 ---
+
+<Layout title="Redirigiendo...">
+<script>
+  window.location.href = '/producto';
+</script>
+<noscript>
+  <meta http-equiv="refresh" content="0;url=/producto" />
+</noscript>
+</Layout>
