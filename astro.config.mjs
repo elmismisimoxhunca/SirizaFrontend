@@ -7,10 +7,4 @@ export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
   trailingSlash: 'ignore',
-  redirects: {
-    '/producto/la-nueva-violencia-moderna': {
-      status: 301,
-      destination: '/producto'
-    },
-  },
 });
