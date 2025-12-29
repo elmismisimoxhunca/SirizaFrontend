@@ -1,0 +1,201 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  canonicalUrl?: string;
+}
+
+const { 
+  title = 'Siria Agaria / Proyecto Literario y Cultural Independiente', 
+  description = 'Proyecto literario y cultural independiente. Descubre literatura con una forma distinta, pero coherente, de ver las cosas. Libros, blog, eventos y más.',
+  image = 'https://sirizagaria.com/wp-content/uploads/2025/04/slider-1.png',
+  type = 'website',
+  canonicalUrl = Astro.url.href
+} = Astro.props;
+
+const siteName = 'Siria Agaria';
+const twitterHandle = '@sirizagaria';
+const siteUrl = 'https://sirizagaria.com';
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Siria Agaria",
+  "alternateName": "Siriza Agaria",
+  "url": siteUrl,
+  "logo": `${siteUrl}/favicon.svg`,
+  "description": "Proyecto literario y cultural independiente",
+  "sameAs": [
+    "https://instagram.com/sirizagaria",
+    "https://x.com/sirizagaria",
+    "https://www.facebook.com/profile.php?id=61574210690030"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "editorial@sirizagaria.com",
+    "contactType": "customer service"
+  }
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteName,
+  "url": siteUrl,
+  "description": description,
+  "publisher": {
+    "@type": "Organization",
+    "name": siteName
+  }
+};
+---
+
+<!doctype html>
+<html lang="es" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content="Sebastián Rodrigo" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Performance: Preconnect to external origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://sirizagaria.com" />
+<link rel="dns-prefetch" href="https://sirizagaria.com" />
+
+<!-- Fonts with display=swap for performance -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="es_CL" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:site" content={twitterHandle} />
+<meta name="twitter:creator" content={twitterHandle} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+<meta name="theme-color" content="#0d0d0f" />
+<meta name="msapplication-TileColor" content="#0d0d0f" />
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+<meta name="generator" content={Astro.generator} />
+
+<!-- Plausible Analytics -->
+<script defer data-domain="sirizagaria.com" src="https://visitas.sirizagaria.com/js/script.file-downloads.hash.outbound-links.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '10024588437658520');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=10024588437658520&ev=PageView&noscript=1"/></noscript>
+</head>
+<body class="font-body text-cream bg-ink">
+<!-- Skip to main content for accessibility -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-gold focus:text-ink focus:rounded">
+  Saltar al contenido principal
+</a>
+<main id="main-content">
+<slot />
+</main>
+</body>
+</html>
+
+<style is:global>
+/* Performance: Smooth scrolling with reduced motion support */
+@media (prefers-reduced-motion: no-preference) {
+  * { scroll-behavior: smooth; }
+}
+
+/* Accessibility: Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Accessibility: Focus visible styles */
+:focus-visible {
+  outline: 2px solid #d4a847;
+  outline-offset: 2px;
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile menu */
+.mobile-menu { transform: translateX(100%); transition: transform .4s ease; }
+.mobile-menu.active { transform: translateX(0); }
+
+/* Buttons */
+.btn-gold { background: linear-gradient(to right, #d4a847, #e8c876); transition: all 0.3s; }
+.btn-gold:hover { background: linear-gradient(to right, #e8c876, #d4a847); }
+.btn-gold:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.btn-outline { border: 1px solid rgba(212,168,71,0.5); transition: all 0.3s; }
+.btn-outline:hover { border-color: #d4a847; background: rgba(212,168,71,0.1); }
+.btn-outline:focus-visible { outline: 2px solid #d4a847; outline-offset: 2px; }
+
+/* Hero image */
+.hero-img { filter: brightness(0.7) contrast(1.1); }
+
+/* Animations */
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* Text clamping for blog excerpts */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>

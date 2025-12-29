@@ -1,0 +1,67 @@
+---
+import Logo from './Logo.astro';
+---
+
+<header role="banner">
+<nav class="fixed top-0 left-0 right-0 z-40 bg-ink/80 backdrop-blur-md border-b border-gold/10" aria-label="Navegación principal">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex items-center justify-between h-20">
+<a href="/" class="flex items-center gap-3" aria-label="Siria Agaria - Inicio">
+<Logo class="w-10 h-10" />
+<span class="font-display text-xl tracking-widest">SIRIZA AGARIA</span>
+</a>
+<div class="hidden lg:flex items-center gap-8" role="navigation">
+<a href="/" class="text-sm tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Inicio</a>
+<a href="/producto" class="text-sm tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Libro Destacado</a>
+<a href="https://sirizagaria.com/blog" class="text-sm tracking-wider text-cream/70 hover:text-gold uppercase transition-colors" rel="noopener">Blog y Articulos</a>
+<a href="/#novelas" class="text-sm tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Novelas Publicadas</a>
+<a href="/#contacto" class="text-sm tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Contacto</a>
+</div>
+<button id="menuBtn" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileMenu">
+<span class="w-6 h-0.5 bg-gold" aria-hidden="true"></span><span class="w-6 h-0.5 bg-gold" aria-hidden="true"></span><span class="w-4 h-0.5 bg-gold" aria-hidden="true"></span>
+</button>
+</div>
+</div>
+</nav>
+</header>
+
+<div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-full max-w-80 bg-ink-light z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+<div class="p-8">
+<button id="closeMenu" class="absolute top-6 right-6 text-gold text-2xl p-2" aria-label="Cerrar menú">&times;</button>
+<nav class="mt-16 flex flex-col gap-6" aria-label="Navegación móvil">
+<a href="/" class="text-lg tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Inicio</a>
+<a href="/producto" class="text-lg tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Libro Destacado</a>
+<a href="https://sirizagaria.com/blog" class="text-lg tracking-wider text-cream/70 hover:text-gold uppercase transition-colors" rel="noopener">Blog y Articulos</a>
+<a href="/#novelas" class="text-lg tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Novelas Publicadas</a>
+<a href="/#contacto" class="text-lg tracking-wider text-cream/70 hover:text-gold uppercase transition-colors">Contacto</a>
+</nav>
+</div>
+</div>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const closeMenu = document.getElementById('closeMenu');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function openMenu() {
+  mobileMenu?.classList.add('active');
+  menuBtn?.setAttribute('aria-expanded', 'true');
+  closeMenu?.focus();
+}
+
+function closeMenuFn() {
+  mobileMenu?.classList.remove('active');
+  menuBtn?.setAttribute('aria-expanded', 'false');
+  menuBtn?.focus();
+}
+
+menuBtn?.addEventListener('click', openMenu);
+closeMenu?.addEventListener('click', closeMenuFn);
+mobileMenu?.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenuFn));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
+    closeMenuFn();
+  }
+});
+</script>

@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const url = Astro.url;
+const orderId = url.searchParams.get('order') || '';
+const total = url.searchParams.get('total') || '';
+---
+
+<Layout title="Datos de Transferencia | Siriza Agaria">
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-gold/5 to-transparent"></div>
+</div>
+
+<Header />
+
+<section class="relative pt-28 pb-12 md:pt-32 md:pb-24 min-h-[70vh]">
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-12">
+
+<div class="text-center mb-8">
+<div class="w-20 h-20 mx-auto bg-gold/20 rounded-full flex items-center justify-center mb-6">
+<svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+</svg>
+</div>
+<h1 class="font-display text-3xl sm:text-4xl text-gold mb-4">Pago por Transferencia</h1>
+<p class="text-cream/80">Realiza la transferencia con los siguientes datos</p>
+</div>
+
+{orderId && (
+<div class="bg-gold/10 border border-gold/30 p-4 rounded-lg mb-6 text-center">
+<p class="text-cream/70 text-sm">Número de orden:</p>
+<p class="text-gold font-mono text-lg font-bold">{orderId}</p>
+{total && (
+<p class="text-cream mt-2">Total a pagar: <span class="text-gold font-bold">{total}</span></p>
+)}
+</div>
+)}
+
+<div class="bg-ink-light/50 border border-gold/20 p-6 sm:p-8 rounded-lg space-y-4">
+<h2 class="font-display text-xl text-gold mb-4 text-center">Datos Bancarios</h2>
+
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-gold/10">
+<span class="text-cream/70">Banco:</span>
+<span class="text-cream font-medium">Banco Estado</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-gold/10">
+<span class="text-cream/70">Tipo de cuenta:</span>
+<span class="text-cream font-medium">Cuenta Corriente</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-gold/10">
+<span class="text-cream/70">Número de cuenta:</span>
+<span class="text-cream font-medium font-mono">XXXXXXXXXX</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-gold/10">
+<span class="text-cream/70">RUT:</span>
+<span class="text-cream font-medium font-mono">XX.XXX.XXX-X</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-gold/10">
+<span class="text-cream/70">Nombre:</span>
+<span class="text-cream font-medium">Sebastián Rodrigo</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-cream/70">Email:</span>
+<span class="text-gold font-medium">pagos@sirizagaria.com</span>
+</div>
+</div>
+</div>
+
+<div class="bg-ink-light/50 border border-gold/20 p-6 rounded-lg mt-6">
+<h3 class="font-display text-lg text-gold mb-3">Instrucciones</h3>
+<ol class="list-decimal list-inside space-y-2 text-cream/80 text-sm">
+<li>Realiza la transferencia por el monto total indicado</li>
+<li>En el comentario de la transferencia, incluye tu <strong class="text-gold">número de orden</strong></li>
+<li>Envía el comprobante de transferencia a <a href="mailto:pagos@sirizagaria.com" class="text-gold hover:underline">pagos@sirizagaria.com</a></li>
+<li>Una vez verificado el pago, recibirás un email de confirmación</li>
+<li>Tu pedido será despachado en un plazo de 1-3 días hábiles</li>
+</ol>
+</div>
+
+<div class="bg-gold/5 border border-gold/10 p-4 rounded-lg mt-6">
+<div class="flex items-start gap-3">
+<svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+</svg>
+<div class="text-xs text-cream/60">
+<p class="mb-1"><strong class="text-cream/80">¿Tienes dudas?</strong></p>
+<p>Escríbenos a <a href="mailto:editorial@sirizagaria.com" class="text-gold hover:underline">editorial@sirizagaria.com</a> o llámanos al <a href="tel:+56983889500" class="text-gold hover:underline">+56 9 8388 9500</a></p>
+</div>
+</div>
+</div>
+
+<div class="text-center mt-8">
+<a href="/" class="inline-block text-gold hover:text-gold-light transition-colors">
+← Volver al Inicio
+</a>
+</div>
+
+</div>
+</section>
+
+<Footer />
+</Layout>

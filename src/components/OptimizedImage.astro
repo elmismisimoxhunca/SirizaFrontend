@@ -1,0 +1,65 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  decoding?: 'async' | 'sync' | 'auto';
+}
+
+const { 
+  src, 
+  alt, 
+  class: className = '', 
+  width, 
+  height, 
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  decoding = 'async'
+} = Astro.props;
+
+const getAvifSrc = (originalSrc: string) => {
+  if (originalSrc.startsWith('http')) return null;
+  return originalSrc.replace(/\.(webp|jpg|jpeg|png)$/i, '.avif');
+};
+
+const getWebpSrc = (originalSrc: string) => {
+  if (originalSrc.startsWith('http')) return null;
+  if (originalSrc.endsWith('.webp')) return originalSrc;
+  return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+};
+
+const avifSrc = getAvifSrc(src);
+const webpSrc = getWebpSrc(src);
+const isExternal = src.startsWith('http');
+---
+
+{isExternal ? (
+  <img 
+    src={src} 
+    alt={alt} 
+    class={className}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+  />
+) : (
+  <picture>
+    {avifSrc && <source srcset={avifSrc} type="image/avif" />}
+    {webpSrc && webpSrc !== src && <source srcset={webpSrc} type="image/webp" />}
+    <img 
+      src={src} 
+      alt={alt} 
+      class={className}
+      width={width}
+      height={height}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding={decoding}
+    />
+  </picture>
+)}

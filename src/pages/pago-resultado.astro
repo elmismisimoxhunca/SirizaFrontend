@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const url = Astro.url;
+const status = url.searchParams.get('status') || 'unknown';
+const orderId = url.searchParams.get('order') || '';
+const authCode = url.searchParams.get('auth') || '';
+const errorCode = url.searchParams.get('code') || '';
+const errorMessage = url.searchParams.get('message') || '';
+
+const isSuccess = status === 'success';
+const isCancelled = status === 'cancelled';
+const isFailed = status === 'failed';
+const isError = status === 'error';
+---
+
+<Layout title={isSuccess ? "¡Pago Exitoso! | Siriza Agaria" : "Resultado del Pago | Siriza Agaria"}>
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-gold/5 to-transparent"></div>
+</div>
+
+<Header />
+
+<section class="relative pt-28 pb-12 md:pt-32 md:pb-24 min-h-[70vh]">
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
+
+{isSuccess && (
+<div class="space-y-6">
+<div class="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center">
+<svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+</svg>
+</div>
+
+<h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-gold">¡Pago Exitoso!</h1>
+
+<p class="text-cream/80 text-lg">
+Tu compra ha sido procesada correctamente. Recibirás un email de confirmación en breve.
+</p>
+
+<div class="bg-ink-light/50 border border-gold/20 p-6 rounded-lg text-left space-y-3">
+<div class="flex justify-between">
+<span class="text-cream/70">Número de orden:</span>
+<span class="text-gold font-mono">{orderId}</span>
+</div>
+{authCode && (
+<div class="flex justify-between">
+<span class="text-cream/70">Código de autorización:</span>
+<span class="text-cream font-mono">{authCode}</span>
+</div>
+)}
+<div class="flex justify-between">
+<span class="text-cream/70">Estado:</span>
+<span class="text-green-500 font-medium">Confirmado</span>
+</div>
+</div>
+
+<div class="bg-gold/10 border border-gold/30 p-4 rounded-lg">
+<p class="text-cream/80 text-sm">
+<strong class="text-gold">Próximos pasos:</strong> Prepararemos tu pedido y te enviaremos 
+la información de seguimiento por email una vez despachado.
+</p>
+</div>
+
+<div class="pt-4 space-y-3">
+<a href="/" class="inline-block bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display py-3 px-8 rounded-lg font-bold tracking-wider uppercase transition-all duration-300">
+Volver al Inicio
+</a>
+</div>
+</div>
+)}
+
+{isCancelled && (
+<div class="space-y-6">
+<div class="w-20 h-20 mx-auto bg-yellow-500/20 rounded-full flex items-center justify-center">
+<svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+</svg>
+</div>
+
+<h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-yellow-500">Pago Cancelado</h1>
+
+<p class="text-cream/80 text-lg">
+Has cancelado el proceso de pago. Tu orden no ha sido procesada.
+</p>
+
+{orderId && (
+<div class="bg-ink-light/50 border border-gold/20 p-6 rounded-lg">
+<p class="text-cream/70 text-sm">Orden: <span class="text-cream font-mono">{orderId}</span></p>
+</div>
+)}
+
+<div class="pt-4 space-y-3">
+<a href="/checkout" class="inline-block bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display py-3 px-8 rounded-lg font-bold tracking-wider uppercase transition-all duration-300">
+Intentar de Nuevo
+</a>
+<br/>
+<a href="/" class="inline-block text-gold hover:text-gold-light transition-colors mt-4">
+← Volver al Inicio
+</a>
+</div>
+</div>
+)}
+
+{isFailed && (
+<div class="space-y-6">
+<div class="w-20 h-20 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
+<svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+</svg>
+</div>
+
+<h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-red-500">Pago Rechazado</h1>
+
+<p class="text-cream/80 text-lg">
+Lo sentimos, tu pago no pudo ser procesado. Por favor intenta con otro método de pago.
+</p>
+
+<div class="bg-ink-light/50 border border-gold/20 p-6 rounded-lg text-left space-y-3">
+{orderId && (
+<div class="flex justify-between">
+<span class="text-cream/70">Orden:</span>
+<span class="text-cream font-mono">{orderId}</span>
+</div>
+)}
+{errorCode && (
+<div class="flex justify-between">
+<span class="text-cream/70">Código de error:</span>
+<span class="text-red-400 font-mono">{errorCode}</span>
+</div>
+)}
+</div>
+
+<div class="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
+<p class="text-cream/80 text-sm">
+<strong class="text-red-400">Posibles causas:</strong> Fondos insuficientes, tarjeta vencida, 
+límite de crédito excedido, o tarjeta bloqueada.
+</p>
+</div>
+
+<div class="pt-4 space-y-3">
+<a href="/checkout" class="inline-block bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display py-3 px-8 rounded-lg font-bold tracking-wider uppercase transition-all duration-300">
+Intentar de Nuevo
+</a>
+<br/>
+<a href="/" class="inline-block text-gold hover:text-gold-light transition-colors mt-4">
+← Volver al Inicio
+</a>
+</div>
+</div>
+)}
+
+{isError && (
+<div class="space-y-6">
+<div class="w-20 h-20 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
+<svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+
+<h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-red-500">Error en el Proceso</h1>
+
+<p class="text-cream/80 text-lg">
+Ha ocurrido un error inesperado. Por favor contacta a soporte si el problema persiste.
+</p>
+
+{errorMessage && (
+<div class="bg-ink-light/50 border border-red-500/20 p-4 rounded-lg">
+<p class="text-red-400 text-sm font-mono">{decodeURIComponent(errorMessage)}</p>
+</div>
+)}
+
+<div class="pt-4 space-y-3">
+<a href="/checkout" class="inline-block bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display py-3 px-8 rounded-lg font-bold tracking-wider uppercase transition-all duration-300">
+Intentar de Nuevo
+</a>
+<br/>
+<a href="mailto:editorial@sirizagaria.com" class="inline-block text-gold hover:text-gold-light transition-colors mt-4">
+Contactar Soporte
+</a>
+</div>
+</div>
+)}
+
+{!isSuccess && !isCancelled && !isFailed && !isError && (
+<div class="space-y-6">
+<div class="w-20 h-20 mx-auto bg-gold/20 rounded-full flex items-center justify-center">
+<svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+
+<h1 class="font-display text-3xl sm:text-4xl text-cream">Estado Desconocido</h1>
+
+<p class="text-cream/80">
+No pudimos determinar el estado de tu transacción. Por favor verifica tu email o contacta a soporte.
+</p>
+
+<div class="pt-4">
+<a href="/" class="inline-block bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display py-3 px-8 rounded-lg font-bold tracking-wider uppercase transition-all duration-300">
+Volver al Inicio
+</a>
+</div>
+</div>
+)}
+
+</div>
+</section>
+
+<Footer />
+</Layout>
+
+<script>
+// Track order status for analytics if needed
+const urlParams = new URLSearchParams(window.location.search);
+const status = urlParams.get('status');
+const orderId = urlParams.get('order');
+
+if (status && orderId) {
+  console.log('Payment result:', { status, orderId });
+  
+  // You can add analytics tracking here
+  // gtag('event', 'purchase_result', { status, order_id: orderId });
+}
+</script>

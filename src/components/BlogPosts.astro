@@ -1,0 +1,94 @@
+---
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  feature_image?: string;
+  published_at: string;
+  slug: string;
+}
+
+const CONTENT_API_KEY = 'b1c7ddc8d04bdef2bb521887c4';
+const GHOST_API_URL = 'https://sirizagaria.com/blog/ghost/api/v3/content/posts';
+
+let posts: BlogPost[] = [];
+let error: string | null = null;
+
+try {
+  const response = await fetch(`${GHOST_API_URL}?key=${CONTENT_API_KEY}&limit=3&include=authors`, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  posts = (data.posts || []).map((post: any) => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt || post.custom_excerpt || '',
+    feature_image: post.feature_image,
+    published_at: post.published_at,
+    slug: post.slug,
+  }));
+  
+  if (posts.length === 0) {
+    error = 'No hay artículos disponibles en este momento';
+  }
+} catch (err) {
+  console.error('Error fetching blog posts:', err);
+  error = 'No se pudieron cargar los artículos del blog';
+}
+---
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  {error ? (
+    <div class="col-span-full text-center text-cream/60">
+      <p>{error}</p>
+    </div>
+  ) : posts.length > 0 ? (
+    posts.map((post, index) => (
+      <article class="card-hover bg-ink-light/50 border border-gold/10 rounded-lg overflow-hidden group">
+        {post.feature_image && (
+          <div class="aspect-video bg-gradient-to-br from-gold/20 via-ink to-ink relative overflow-hidden">
+            <img 
+              src={post.feature_image} 
+              alt={post.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        )}
+        {!post.feature_image && (
+          <div class="aspect-video bg-gradient-to-br from-gold/20 via-ink to-ink relative flex items-center justify-center">
+            <span class="font-display text-6xl text-gold/20">{String(index + 1).padStart(2, '0')}</span>
+          </div>
+        )}
+        <div class="p-6">
+          <p class="text-gold/70 text-xs tracking-wider uppercase mb-2">
+            {new Date(post.published_at).toLocaleDateString('es-CL', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+          <h3 class="font-display text-xl mb-3 group-hover:text-gold transition-colors line-clamp-2">
+            {post.title}
+          </h3>
+          <p class="text-cream/60 text-sm mb-4 line-clamp-2">
+            {post.excerpt || 'Sin descripción disponible'}
+          </p>
+          <a href={`https://sirizagaria.com/blog/${post.slug}`} class="text-gold text-sm tracking-wider hover:text-gold/80 transition-colors">
+            Leer mas →
+          </a>
+        </div>
+      </article>
+    ))
+  ) : (
+    <div class="col-span-full text-center text-cream/60">
+      <p>No hay artículos disponibles en este momento</p>
+    </div>
+  )}
+</div>

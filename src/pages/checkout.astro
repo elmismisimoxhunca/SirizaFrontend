@@ -1,0 +1,396 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Checkout | Siriza Agaria">
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-gold/5 to-transparent"></div>
+</div>
+
+<Header />
+
+<section class="relative pt-28 pb-12 md:pt-32 md:pb-24">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12">
+
+<div class="text-center mb-8 md:mb-12">
+<p class="text-gold tracking-[0.3em] text-xs sm:text-sm uppercase mb-3">Finalizar compra</p>
+<h1 class="font-display text-3xl sm:text-4xl md:text-5xl tracking-wide">Checkout Seguro</h1>
+</div>
+
+<div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+
+<div class="lg:col-span-3 space-y-6">
+
+<div class="bg-ink-light/50 border border-gold/20 p-5 sm:p-6 rounded-lg">
+<h2 class="font-display text-xl sm:text-2xl text-gold mb-5">Información de Contacto</h2>
+<div class="space-y-4">
+<div>
+<label for="nombre" class="block text-sm text-cream/70 mb-2">Nombre completo *</label>
+<input type="text" id="nombre" name="nombre" required placeholder="Ej: María González Pérez" class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+</div>
+<div class="grid sm:grid-cols-2 gap-4">
+<div>
+<label for="email" class="block text-sm text-cream/70 mb-2">Email *</label>
+<input type="email" id="email" name="email" required placeholder="tu@email.com" class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+</div>
+<div>
+<label for="telefono" class="block text-sm text-cream/70 mb-2">Teléfono *</label>
+<input type="tel" id="telefono" name="telefono" required placeholder="+56 9 1234 5678" class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-ink-light/50 border border-gold/20 p-5 sm:p-6 rounded-lg">
+<h2 class="font-display text-xl sm:text-2xl text-gold mb-5">Dirección de Envío</h2>
+<div class="space-y-4">
+<div class="grid sm:grid-cols-2 gap-4">
+<div>
+<label for="region" class="block text-sm text-cream/70 mb-2">Región *</label>
+<select id="region" name="region" required class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+<option value="">Selecciona tu región</option>
+<option value="arica">Arica y Parinacota</option>
+<option value="tarapaca">Tarapacá</option>
+<option value="antofagasta">Antofagasta</option>
+<option value="atacama">Atacama</option>
+<option value="coquimbo">Coquimbo</option>
+<option value="valparaiso">Valparaíso</option>
+<option value="metropolitana">Metropolitana de Santiago</option>
+<option value="ohiggins">O'Higgins</option>
+<option value="maule">Maule</option>
+<option value="nuble">Ñuble</option>
+<option value="biobio">Biobío</option>
+<option value="araucania">La Araucanía</option>
+<option value="losrios">Los Ríos</option>
+<option value="loslagos">Los Lagos</option>
+<option value="aysen">Aysén</option>
+<option value="magallanes">Magallanes</option>
+</select>
+</div>
+<div>
+<label for="comuna" class="block text-sm text-cream/70 mb-2">Comuna *</label>
+<input type="text" id="comuna" name="comuna" required placeholder="Ej: Providencia" class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+</div>
+</div>
+<div>
+<label for="direccion" class="block text-sm text-cream/70 mb-2">Dirección completa *</label>
+<input type="text" id="direccion" name="direccion" required placeholder="Calle, número, depto/oficina" class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base">
+</div>
+<div>
+<label for="notas" class="block text-sm text-cream/70 mb-2">Notas del pedido (opcional)</label>
+<textarea id="notas" name="notas" rows="3" placeholder="Instrucciones especiales para la entrega, referencias, etc." class="checkout-input w-full px-4 py-3 rounded-lg text-sm sm:text-base resize-none"></textarea>
+</div>
+</div>
+
+<div id="shippingInfo" class="mt-4 p-4 bg-gold/10 border border-gold/30 rounded-lg hidden">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+<div>
+<p class="text-cream font-medium text-sm" id="shippingMethod">-</p>
+<p class="text-cream/70 text-xs" id="shippingTime">-</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-ink-light/50 border border-gold/20 p-5 sm:p-6 rounded-lg">
+<h2 class="font-display text-xl sm:text-2xl text-gold mb-5">Método de Pago</h2>
+<div class="space-y-3">
+<label class="payment-option block p-4 border border-gold/20 rounded-lg cursor-pointer">
+<div class="flex items-center gap-4">
+<input type="radio" name="payment" value="webpay" class="w-4 h-4 accent-gold" checked>
+<div class="flex-1">
+<p class="text-cream font-medium">WebPay</p>
+<p class="text-cream/60 text-sm">Tarjeta de crédito o débito</p>
+</div>
+<svg class="w-8 h-8 text-gold/70" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+</div>
+</label>
+<label class="payment-option block p-4 border border-gold/20 rounded-lg cursor-pointer">
+<div class="flex items-center gap-4">
+<input type="radio" name="payment" value="transferencia" class="w-4 h-4 accent-gold">
+<div class="flex-1">
+<p class="text-cream font-medium">Transferencia Bancaria</p>
+<p class="text-cream/60 text-sm">Transferencia directa a nuestra cuenta</p>
+</div>
+<svg class="w-8 h-8 text-gold/70" fill="currentColor" viewBox="0 0 24 24"><path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z"/></svg>
+</div>
+</label>
+</div>
+
+<div id="transferenciaInfo" class="mt-4 p-4 bg-ink/50 border border-gold/20 rounded-lg hidden">
+<p class="text-cream/80 text-sm mb-2">Datos para transferencia:</p>
+<div class="text-cream/70 text-sm space-y-1">
+<p><span class="text-gold">Banco:</span> Banco Estado</p>
+<p><span class="text-gold">Tipo:</span> Cuenta Corriente</p>
+<p><span class="text-gold">Número:</span> XXXXXXXXXX</p>
+<p><span class="text-gold">RUT:</span> XX.XXX.XXX-X</p>
+<p><span class="text-gold">Email:</span> pagos@sirizagaria.com</p>
+</div>
+<p class="text-cream/60 text-xs mt-3">* Envía el comprobante a pagos@sirizagaria.com</p>
+</div>
+</div>
+
+</div>
+
+<div class="lg:col-span-2">
+<div class="lg:sticky lg:top-28 space-y-6">
+
+<div class="bg-ink-light/50 border border-gold/20 p-5 sm:p-6 rounded-lg">
+<h2 class="font-display text-xl sm:text-2xl text-gold mb-5">Tu Pedido</h2>
+
+<div class="flex gap-4 pb-5 border-b border-gold/10">
+<img src="/assets/La-nueva-violencia-moderna-portada-1016x1536.webp" alt="La Nueva Violencia Moderna" class="w-20 h-auto rounded-lg border border-gold/20">
+<div class="flex-1">
+<h3 class="font-display text-lg text-cream mb-1">La Nueva Violencia Moderna</h3>
+<p class="text-cream/60 text-sm">Sebastián Rodrigo</p>
+<div class="flex items-center gap-3 mt-2">
+<label for="cantidad" class="text-cream/70 text-sm">Cantidad:</label>
+<select id="cantidad" name="cantidad" class="checkout-input px-3 py-1 rounded text-sm">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="py-4 space-y-3 border-b border-gold/10">
+<div class="flex justify-between text-sm">
+<span class="text-cream/70">Subtotal</span>
+<span class="text-cream" id="subtotal">$19.000</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-cream/70">Envío</span>
+<span class="text-cream" id="shippingCost">Selecciona región</span>
+</div>
+</div>
+
+<div class="pt-4 flex justify-between">
+<span class="font-display text-lg text-cream">Total</span>
+<span class="font-display text-2xl text-gold" id="total">$19.000</span>
+</div>
+</div>
+
+<button type="button" id="submitOrder" class="w-full bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-ink font-display text-lg py-4 px-8 rounded-lg font-bold tracking-wider uppercase text-center transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+Confirmar Pedido
+</button>
+
+<div class="flex items-center justify-center gap-6 text-cream/50 text-xs">
+<div class="flex items-center gap-2">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+<span>Pago Seguro</span>
+</div>
+<div class="flex items-center gap-2">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+<span>Confirmación por Email</span>
+</div>
+</div>
+
+<div class="bg-gold/5 border border-gold/10 p-4 rounded-lg">
+<div class="flex items-start gap-3">
+<svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+<div class="text-xs text-cream/60">
+<p class="mb-1"><strong class="text-cream/80">¿Tienes dudas?</strong></p>
+<p>Escríbenos a <a href="mailto:editorial@sirizagaria.com" class="text-gold hover:underline">editorial@sirizagaria.com</a> o llámanos al <a href="tel:+56983889500" class="text-gold hover:underline">+56 9 8388 9500</a></p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<Footer />
+</Layout>
+
+<style>
+.checkout-input {
+  background: #1a1a1f;
+  border: 1px solid rgba(212,168,71,0.2);
+  color: #faf7f2;
+  transition: border-color 0.3s;
+}
+.checkout-input:focus {
+  outline: none;
+  border-color: #d4a847;
+}
+.checkout-input::placeholder {
+  color: rgba(250,247,242,0.4);
+}
+select.checkout-input option {
+  background: #1a1a1f;
+  color: #faf7f2;
+}
+.payment-option {
+  transition: all 0.3s;
+}
+.payment-option:hover {
+  border-color: rgba(212,168,71,0.5);
+}
+.payment-option.selected {
+  border-color: #d4a847;
+  background: rgba(212,168,71,0.1);
+}
+</style>
+
+<script>
+const PRICE = 19000;
+const regionSelect = document.getElementById('region') as HTMLSelectElement;
+const cantidadSelect = document.getElementById('cantidad') as HTMLSelectElement;
+const shippingInfo = document.getElementById('shippingInfo');
+const shippingMethod = document.getElementById('shippingMethod');
+const shippingTime = document.getElementById('shippingTime');
+const shippingCostEl = document.getElementById('shippingCost');
+const subtotalEl = document.getElementById('subtotal');
+const totalEl = document.getElementById('total');
+
+const extremeRegions = ['arica', 'tarapaca', 'antofagasta', 'aysen', 'magallanes'];
+const freeRegionsPaket = ['metropolitana', 'valparaiso', 'ohiggins'];
+
+function formatPrice(price: number): string {
+    return '$' + price.toLocaleString('es-CL');
+}
+
+function updatePricing() {
+    const region = regionSelect?.value || '';
+    const cantidad = parseInt(cantidadSelect?.value || '1');
+    const subtotal = PRICE * cantidad;
+    let shippingCost = 0;
+    let method = '';
+    let time = '';
+
+    if (region) {
+        shippingInfo?.classList.remove('hidden');
+        
+        if (extremeRegions.includes(region)) {
+            shippingCost = cantidad === 1 ? 6000 : 9000;
+            method = 'Bluexpress - ' + formatPrice(shippingCost);
+            time = 'Entrega en 5-10 días hábiles';
+        } else if (freeRegionsPaket.includes(region)) {
+            shippingCost = 0;
+            method = 'Paket - Gratis';
+            time = 'Entrega en 1-3 días hábiles';
+        } else {
+            shippingCost = 0;
+            method = 'Correos de Chile - Gratis';
+            time = 'Entrega en 3-5 días hábiles';
+        }
+        
+        if (shippingMethod) shippingMethod.textContent = method;
+        if (shippingTime) shippingTime.textContent = time;
+        if (shippingCostEl) shippingCostEl.textContent = shippingCost === 0 ? 'Gratis' : formatPrice(shippingCost);
+    } else {
+        shippingInfo?.classList.add('hidden');
+        if (shippingCostEl) shippingCostEl.textContent = 'Selecciona región';
+    }
+
+    if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+    if (totalEl) totalEl.textContent = formatPrice(subtotal + shippingCost);
+}
+
+regionSelect?.addEventListener('change', updatePricing);
+cantidadSelect?.addEventListener('change', updatePricing);
+
+const paymentOptions = document.querySelectorAll('.payment-option');
+const transferenciaInfo = document.getElementById('transferenciaInfo');
+
+paymentOptions.forEach(option => {
+    const radio = option.querySelector('input[type="radio"]') as HTMLInputElement;
+    
+    option.addEventListener('click', () => {
+        paymentOptions.forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+        if (radio) radio.checked = true;
+        
+        if (radio?.value === 'transferencia') {
+            transferenciaInfo?.classList.remove('hidden');
+        } else {
+            transferenciaInfo?.classList.add('hidden');
+        }
+    });
+    
+    if (radio?.checked) {
+        option.classList.add('selected');
+    }
+});
+
+document.getElementById('submitOrder')?.addEventListener('click', async function() {
+    const submitBtn = this as HTMLButtonElement;
+    const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value;
+    const email = (document.getElementById('email') as HTMLInputElement)?.value;
+    const telefono = (document.getElementById('telefono') as HTMLInputElement)?.value;
+    const region = (document.getElementById('region') as HTMLSelectElement)?.value;
+    const comuna = (document.getElementById('comuna') as HTMLInputElement)?.value;
+    const direccion = (document.getElementById('direccion') as HTMLInputElement)?.value;
+    const notas = (document.getElementById('notas') as HTMLTextAreaElement)?.value;
+    const cantidad = parseInt((document.getElementById('cantidad') as HTMLSelectElement)?.value || '1');
+    const payment = (document.querySelector('input[name="payment"]:checked') as HTMLInputElement)?.value;
+
+    if (!nombre || !email || !telefono || !region || !comuna || !direccion) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+    }
+
+    // Calculate totals
+    const subtotal = PRICE * cantidad;
+    let shippingCost = 0;
+    if (extremeRegions.includes(region)) {
+        shippingCost = cantidad === 1 ? 6000 : 9000;
+    }
+    const total = subtotal + shippingCost;
+
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Procesando...';
+
+    try {
+        const API_URL = 'https://api.sirizagaria.com'; // Change to your backend URL
+        const response = await fetch(`${API_URL}/api/payment/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre,
+                email,
+                telefono,
+                region,
+                comuna,
+                direccion,
+                notas,
+                cantidad,
+                payment_method: payment,
+                subtotal,
+                shipping_cost: shippingCost,
+                total,
+                return_url: `${API_URL}/api/payment/return`
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            if (data.payment_method === 'transferencia') {
+                // Redirect to transfer info page
+                window.location.href = `/transferencia?order=${data.order_id}&total=${encodeURIComponent(totalEl?.textContent || '')}`;
+            } else if (data.redirect_url) {
+                // Redirect to Webpay
+                window.location.href = data.redirect_url;
+            }
+        } else {
+            throw new Error(data.error || 'Error al procesar el pago');
+        }
+    } catch (error: any) {
+        console.error('Payment error:', error);
+        alert('Error al procesar el pago: ' + (error.message || 'Intenta nuevamente'));
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirmar Pedido';
+    }
+});
+</script>
