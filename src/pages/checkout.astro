@@ -121,15 +121,7 @@ import Footer from '../components/Footer.astro';
 </div>
 
 <div id="transferenciaInfo" class="mt-4 p-4 bg-ink/50 border border-gold/20 rounded-lg hidden">
-<p class="text-cream/80 text-sm mb-2">Datos para transferencia:</p>
-<div class="text-cream/70 text-sm space-y-1">
-<p><span class="text-gold">Banco:</span> Banco Estado</p>
-<p><span class="text-gold">Tipo:</span> Cuenta Corriente</p>
-<p><span class="text-gold">Número:</span> XXXXXXXXXX</p>
-<p><span class="text-gold">RUT:</span> XX.XXX.XXX-X</p>
-<p><span class="text-gold">Email:</span> pagos@sirizagaria.com</p>
-</div>
-<p class="text-cream/60 text-xs mt-3">* Envía el comprobante a pagos@sirizagaria.com</p>
+<p class="text-cream/80 text-sm">Los datos bancarios se mostrarán después de confirmar tu pedido.</p>
 </div>
 </div>
 
@@ -351,31 +343,11 @@ document.getElementById('submitOrder')?.addEventListener('click', async function
 
     try {
         const API_URL = 'https://api.sirizagaria.com'; // Change to your backend URL
-        const endpoint = `${API_URL}/api/payment/create`;
-        
-        console.log('Sending payment request to:', endpoint);
-        console.log('Payload:', {
-            nombre,
-            email,
-            telefono,
-            region,
-            comuna,
-            direccion,
-            notas,
-            cantidad,
-            payment_method: payment,
-            subtotal,
-            shipping_cost: shippingCost,
-            total
-        });
-
-        const response = await fetch(endpoint, {
+        const response = await fetch(`${API_URL}/api/payment/create`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body: JSON.stringify({
                 nombre,
                 email,
@@ -389,19 +361,11 @@ document.getElementById('submitOrder')?.addEventListener('click', async function
                 subtotal,
                 shipping_cost: shippingCost,
                 total,
-                return_url: `${window.location.origin}/transferencia`
+                return_url: `${API_URL}/api/payment/return`
             })
         });
 
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
         const data = await response.json();
-        console.log('Response data:', data);
 
         if (data.success) {
             if (data.payment_method === 'transferencia') {
@@ -415,11 +379,7 @@ document.getElementById('submitOrder')?.addEventListener('click', async function
             throw new Error(data.error || 'Error al procesar el pago');
         }
     } catch (error: any) {
-        console.error('Payment error details:', {
-            message: error.message,
-            stack: error.stack,
-            name: error.name
-        });
+        console.error('Payment error:', error);
         alert('Error al procesar el pago: ' + (error.message || 'Intenta nuevamente'));
         submitBtn.disabled = false;
         submitBtn.textContent = 'Confirmar Pedido';
