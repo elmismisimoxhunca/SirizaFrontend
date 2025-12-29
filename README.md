@@ -52,7 +52,20 @@ Sitio web oficial de **Siria Agaria** — Proyecto literario y cultural independ
 | `npm run preview` | Vista previa del build local |
 | `node scripts/convert-to-avif.mjs` | Convierte imágenes a AVIF |
 
-## 🔧 Configuración
+## � Docker
+
+```bash
+# Build and run with docker-compose
+docker-compose up -d
+
+# Or build manually
+docker build -t sirizafrontend .
+docker run -p 3000:80 sirizafrontend
+```
+
+El contenedor expone el puerto **80** (mapeado a **3000** en docker-compose).
+
+## �🔧 Configuración
 
 ### Variables de entorno (opcional)
 
