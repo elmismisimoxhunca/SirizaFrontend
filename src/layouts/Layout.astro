@@ -74,8 +74,9 @@ const websiteSchema = {
 <link rel="preconnect" href="https://sirizagaria.com" />
 <link rel="dns-prefetch" href="https://sirizagaria.com" />
 
-<!-- Fonts with display=swap for performance -->
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet" />
+<!-- Fonts with display=swap for performance - preload critical font weights -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
@@ -108,9 +109,20 @@ const websiteSchema = {
 
 <meta name="generator" content={Astro.generator} />
 
-<!-- Plausible Analytics -->
+<!-- Plausible Analytics - deferred for performance -->
 <script defer data-domain="sirizagaria.com" src="https://visitas.sirizagaria.com/js/script.file-downloads.hash.outbound-links.js"></script>
 <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+<!-- Optimize Astro CSS delivery -->
+<style>
+  @font-face {
+    font-family: 'EB Garamond';
+    src: url('https://fonts.gstatic.com/s/ebgaramond/v15/ga6iaw1J5X0T9RW6j9bNVlZ2dG5-tPtHjVmN-dL8.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
 
 <!-- Facebook Pixel -->
 <script>

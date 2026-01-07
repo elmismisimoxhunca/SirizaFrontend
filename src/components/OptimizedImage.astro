@@ -8,6 +8,7 @@ interface Props {
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   decoding?: 'async' | 'sync' | 'auto';
+  sizes?: string;
 }
 
 const { 
@@ -18,23 +19,24 @@ const {
   height, 
   loading = 'lazy',
   fetchpriority = 'auto',
-  decoding = 'async'
+  decoding = 'async',
+  sizes
 } = Astro.props;
 
 const getAvifSrc = (originalSrc: string) => {
-  if (originalSrc.startsWith('http')) return null;
+  if (originalSrc.includes('http')) return null;
   return originalSrc.replace(/\.(webp|jpg|jpeg|png)$/i, '.avif');
 };
 
 const getWebpSrc = (originalSrc: string) => {
-  if (originalSrc.startsWith('http')) return null;
+  if (originalSrc.includes('http')) return null;
   if (originalSrc.endsWith('.webp')) return originalSrc;
   return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 };
 
 const avifSrc = getAvifSrc(src);
 const webpSrc = getWebpSrc(src);
-const isExternal = src.startsWith('http');
+const isExternal = src.includes('http');
 ---
 
 {isExternal ? (
@@ -60,6 +62,7 @@ const isExternal = src.startsWith('http');
       loading={loading}
       fetchpriority={fetchpriority}
       decoding={decoding}
+      sizes={sizes}
     />
   </picture>
 )}

@@ -14,6 +14,22 @@ const GHOST_API_URL = 'https://sirizagaria.com/blog/ghost/api/v3/content/posts';
 let posts: BlogPost[] = [];
 let error: string | null = null;
 
+const optimizeImageUrl = (url: string): string => {
+  if (!url) return url;
+  if (!url.startsWith('http')) return url;
+  
+  const urlObj = new URL(url);
+  const params = new URLSearchParams(urlObj.search);
+  
+  params.set('w', '600');
+  params.set('h', '400');
+  params.set('fit', 'crop');
+  params.set('q', '80');
+  
+  urlObj.search = params.toString();
+  return urlObj.toString();
+};
+
 try {
   const response = await fetch(`${GHOST_API_URL}?key=${CONTENT_API_KEY}&limit=3&include=authors`, {
     headers: {
@@ -30,7 +46,7 @@ try {
     id: post.id,
     title: post.title,
     excerpt: post.excerpt || post.custom_excerpt || '',
-    feature_image: post.feature_image,
+    feature_image: post.feature_image ? optimizeImageUrl(post.feature_image) : undefined,
     published_at: post.published_at,
     slug: post.slug,
   }));
@@ -60,6 +76,9 @@ try {
                 alt={post.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
+                decoding="async"
+                width="600"
+                height="400"
               />
             </div>
           )}

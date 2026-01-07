@@ -7,4 +7,19 @@ export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
   trailingSlash: 'ignore',
+  vite: {
+    build: {
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['@astrojs/tailwind']
+          }
+        }
+      }
+    },
+    ssr: {
+      external: ['sharp']
+    }
+  }
 });
