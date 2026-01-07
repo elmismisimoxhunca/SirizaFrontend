@@ -7,6 +7,7 @@ Disallow: /*?*sort=
 Disallow: /*?*filter=
 
 Sitemap: https://sirizagaria.com/sitemap.xml
+Sitemap: https://sirizagaria.com/blog/sitemap.xml
 
 User-agent: AdsBot-Google
 Allow: /
