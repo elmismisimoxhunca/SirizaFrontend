@@ -1,6 +1,6 @@
-# Siria Agaria Frontend
+# Siriza Agaria Frontend
 
-Sitio web oficial de **Siria Agaria** — Proyecto literario y cultural independiente.
+Sitio web oficial de **Siriza Agaria** — Proyecto literario y cultural independiente.
 
 🌐 **Sitio en producción**: [sirizagaria.com](https://sirizagaria.com)
 
@@ -85,4 +85,4 @@ PUBLIC_API_URL=https://api.sirizagaria.com
 
 ## 📄 Licencia
 
-Todos los derechos reservados © Siria Agaria
+Todos los derechos reservados © Siriza Agaria
